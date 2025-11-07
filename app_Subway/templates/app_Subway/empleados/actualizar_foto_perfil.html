@@ -1,0 +1,66 @@
+{% extends 'app_Subway/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card card-custom">
+            <div class="card-body">
+                <h2 class="text-center mb-4" style="color: #009246;">
+                    <i class="fas fa-camera me-2"></i>Actualizar Foto de Perfil
+                </h2>
+                
+                <div class="text-center mb-4">
+                    {% if empleado.foto_perfil %}
+                        <img src="{{ empleado.foto_perfil.url }}" alt="Foto actual" 
+                             class="img-fluid rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+                    {% else %}
+                        <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center" 
+                             style="width: 150px; height: 150px;">
+                            <i class="fas fa-user fa-3x text-secondary"></i>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Información del Empleado</h5>
+                        <p class="mb-1"><strong>Nombre:</strong> {{ empleado.nombre }}</p>
+                        <p class="mb-1"><strong>Puesto:</strong> {{ empleado.puesto }}</p>
+                        <p class="mb-0"><strong>Sucursal:</strong> {{ empleado.sucursal.nombre }}</p>
+                    </div>
+                </div>
+                
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="foto_perfil" class="form-label">Seleccionar nueva foto</label>
+                        <input type="file" class="form-control" id="foto_perfil" name="foto_perfil" accept="image/*" required>
+                        <div class="form-text">
+                            Formatos aceptados: JPG, PNG, GIF. Tamaño máximo: 5MB.
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{% url 'ver_empleados' %}" class="btn btn-secondary me-md-2">
+                            <i class="fas fa-arrow-left me-1"></i>Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-subway">
+                            <i class="fas fa-upload me-1"></i>Actualizar Foto
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .rounded-circle {
+        border: 3px solid #009246;
+    }
+    .form-control:focus {
+        border-color: #009246;
+        box-shadow: 0 0 0 0.2rem rgba(0, 146, 70, 0.25);
+    }
+</style>
+{% endblock %}
